@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CVStudy</string>
+    <string name="opencv_version">OpenCV Version:</string>
+    <string name="face_detect_demo">Face Detect Demo</string>
+    <string name="faces_detected">[%d] Faces Detected!</string>
+    <string name="choose_a_image">Choose A Image</string>
+    <string name="blur_bitmap">Gaussian Blur Demo</string>
+    <string name="blur_level_int">Blur Level: %d</string>
+</resources>
