@@ -38,7 +38,8 @@ JNI_FUNC(detectFaceFromBitmap)(JNIEnv *env, jclass type, jstring cascadePath_, j
     const char *cascadePath = env->GetStringUTFChars(cascadePath_, nullptr);
     CascadeClassifier cascade(cascadePath);
     // read bitmap
-    Mat image = OpenCVUtils::lockABitmap2Mat(env, bitmap, info);
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
     // convert bitmap to gray
     Mat gray;
     cvtColor(image, gray, COLOR_RGBA2GRAY);
@@ -70,7 +71,8 @@ JNIEXPORT jint JNICALL
 JNI_FUNC(blurBitmap)(JNIEnv *env, jclass type, jobject bitmap, jint level) {
     AndroidBitmapInfo info;
     // read bitmap
-    Mat image = OpenCVUtils::lockABitmap2Mat(env, bitmap, info);
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
     LOGD("Blur Bitmap [%d x %d] [%d] !!", info.width, info.height, level);
     int kRadius = level * 10 + 1;
     GaussianBlur(image, image, Size(kRadius, kRadius), 0);

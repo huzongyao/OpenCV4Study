@@ -14,8 +14,8 @@ android {
         applicationId "com.hzy.cv.demo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         externalNativeBuild {
             ndk {
                 abiFilters "armeabi-v7a"
@@ -42,7 +42,7 @@ android {
             signingConfig signingConfigs.demokey
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.demokey
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -63,7 +63,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.blankj:utilcode:1.25.3'
+    implementation 'com.blankj:utilcode:1.25.9'
     implementation 'com.alibaba:arouter-api:1.5.0'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation 'com.jakewharton:butterknife:10.1.0'

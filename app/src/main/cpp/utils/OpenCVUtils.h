@@ -15,7 +15,7 @@ class OpenCVUtils {
 public:
     static void *lockABitmap(JNIEnv *env, jobject bitmap, AndroidBitmapInfo &info);
 
-    static Mat lockABitmap2Mat(JNIEnv *env, jobject bitmap, AndroidBitmapInfo &info);
+    static void lockABitmap2Mat(JNIEnv *env, jobject bitmap, AndroidBitmapInfo &info, Mat &mat);
 
     static jintArray rectVector2AIntArray(JNIEnv *env, const std::vector<Rect> &rects);
 };
