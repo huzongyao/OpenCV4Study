@@ -8,6 +8,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/objdetect.hpp>
 #include <android/bitmap.h>
+#include <utils/EffectUtils.h>
 
 using namespace cv;
 
@@ -82,6 +83,29 @@ JNI_FUNC(blurBitmap)(JNIEnv *env, jclass type, jobject bitmap, jint level) {
     // draw text
     putText(image, oss.str(), Point(0, (int) (info.height * 0.95)), FONT_HERSHEY_SIMPLEX,
             2, Scalar(10, 255, 0), 4, LINE_AA);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(negativeColor)(JNIEnv *env, jclass type, jobject bitmap) {
+    AndroidBitmapInfo info;
+    // read bitmap
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::negativeColor(image);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap){
+    AndroidBitmapInfo info;
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::rgba2Gray(image);
     AndroidBitmap_unlockPixels(env, bitmap);
     return 0;
 }

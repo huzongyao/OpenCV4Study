@@ -6,4 +6,5 @@
     <string name="choose_a_image">Choose A Image</string>
     <string name="blur_bitmap">Gaussian Blur Demo</string>
     <string name="blur_level_int">Blur Level: %d</string>
+    <string name="simple_effect_demo">Simple Effect Demo</string>
 </resources>

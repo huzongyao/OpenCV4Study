@@ -40,6 +40,12 @@ JNI_FUNC(detectFaceFromBitmap)(JNIEnv *env, jclass type, jstring cascadePath_, j
 JNIEXPORT jint JNICALL
 JNI_FUNC(blurBitmap)(JNIEnv *env, jclass type, jobject bitmap, jint level);
 
+JNIEXPORT jint JNICALL
+JNI_FUNC(negativeColor)(JNIEnv *env, jclass type, jobject bitmap);
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap);
+
 #ifdef __cplusplus
 }
 #endif

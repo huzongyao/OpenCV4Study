@@ -38,6 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/blur_bitmap" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_simple_effect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/simple_effect_demo" />
     </LinearLayout>
 
 </ScrollView>

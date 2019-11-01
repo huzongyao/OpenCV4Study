@@ -26,5 +26,8 @@
         <activity
             android:name=".activity.BlurImageActivity"
             android:label="@string/blur_bitmap" />
+        <activity
+            android:name=".activity.SimpleEffectActivity"
+            android:label="@string/simple_effect_demo" />
     </application>
 </manifest>

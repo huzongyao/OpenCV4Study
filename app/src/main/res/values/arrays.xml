@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="simple_effect_list" >
+        <item>Negative</item>
+        <item>Gray Map</item>
+    </string-array>
+</resources>

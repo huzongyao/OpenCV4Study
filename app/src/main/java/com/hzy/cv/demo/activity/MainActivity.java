@@ -42,4 +42,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBlueImageClicked() {
         ARouter.getInstance().build(RouterHub.BLUR_ACTIVITY).navigation();
     }
+
+    @OnClick(R.id.button_simple_effect)
+    public void onSimpleEffectClicked() {
+        ARouter.getInstance().build(RouterHub.SIMPLE_EFFECT_ACTIVITY).navigation();
+    }
 }
