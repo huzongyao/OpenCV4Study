@@ -46,6 +46,12 @@ JNI_FUNC(negativeColor)(JNIEnv *env, jclass type, jobject bitmap);
 JNIEXPORT jint JNICALL
 JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap);
 
+JNIEXPORT jint JNICALL
+JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap);
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap);
+
 #ifdef __cplusplus
 }
 #endif

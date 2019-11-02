@@ -70,10 +70,16 @@ public class SimpleEffectActivity extends AppCompatActivity {
             Bitmap bitmap = mDemoBitmap.copy(Bitmap.Config.ARGB_8888, true);
             switch (mEffectIndex) {
                 case 0:
-                    OpenCVApi.negativeColor(bitmap);
+                    OpenCVApi.adaptiveThreshold(bitmap);
                     break;
                 case 1:
+                    OpenCVApi.negativeColor(bitmap);
+                    break;
+                case 2:
                     OpenCVApi.rgba2Gray(bitmap);
+                    break;
+                case 3:
+                    OpenCVApi.cannyImage(bitmap);
                     break;
             }
 

@@ -23,3 +23,18 @@ void EffectUtils::rgba2Gray(Mat &image) {
     cvtColor(image, gray, COLOR_RGBA2GRAY);
     cvtColor(gray, image, COLOR_GRAY2RGBA);
 }
+
+void EffectUtils::cannyImage(Mat &image) {
+    Mat gray;
+    cvtColor(image, gray, COLOR_RGBA2GRAY);
+    GaussianBlur(gray, gray, Size(3, 3), 0, 0, BORDER_DEFAULT);
+    Canny(gray, gray, 10, 100, 3, true);
+    cvtColor(gray, image, COLOR_GRAY2RGBA);
+}
+
+void EffectUtils::adaptiveThresholdImage(Mat &image) {
+    Mat gray;
+    cvtColor(image, gray, COLOR_RGBA2GRAY);
+    adaptiveThreshold(gray, gray, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 25, 10);
+    cvtColor(gray, image, COLOR_GRAY2RGBA);
+}

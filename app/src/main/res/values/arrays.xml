@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="simple_effect_list" >
+        <item>AdaptiveThreshold</item>
         <item>Negative</item>
         <item>Gray Map</item>
+        <item>Canny Image</item>
     </string-array>
 </resources>

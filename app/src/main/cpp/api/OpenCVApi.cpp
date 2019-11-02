@@ -109,3 +109,25 @@ JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap){
     AndroidBitmap_unlockPixels(env, bitmap);
     return 0;
 }
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap){
+    AndroidBitmapInfo info;
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::cannyImage(image);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap){
+    AndroidBitmapInfo info;
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::adaptiveThresholdImage(image);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}

@@ -14,6 +14,10 @@ public class OpenCVApi {
 
     public static native int rgba2Gray(Bitmap bitmap);
 
+    public static native int cannyImage(Bitmap bitmap);
+
+    public static native int adaptiveThreshold(Bitmap bitmap);
+
     static {
         System.loadLibrary("opencv");
     }

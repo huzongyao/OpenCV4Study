@@ -1,6 +1,10 @@
 # OpenCV4Study
 To Compile And Study OpenCV on Android Based on OpenCV 4.x
 
+|  Face Detection | Blur | Threshold | Gray |
+| ------------ | -------------- | -------------- | -------------- |
+|![pic](https://github.com/huzongyao/OpenCV4Study/blob/master/misc/demo1.png?raw=true)|![pic](https://github.com/huzongyao/OpenCV4Study/blob/master/misc/demo2.png?raw=true)|![pic](https://github.com/huzongyao/OpenCV4Study/blob/master/misc/demo3.png?raw=true)|![pic](https://github.com/huzongyao/OpenCV4Study/blob/master/misc/demo4.png?raw=true)|
+
 ### Details
 #### Instructions
 1. In Order to Speed up Repository clone process, OpenCV SDK files are git ignored by this project.

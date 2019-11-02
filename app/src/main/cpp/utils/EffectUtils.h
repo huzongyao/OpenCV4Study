@@ -14,6 +14,10 @@ public:
     static void negativeColor(Mat& image);
 
     static void rgba2Gray(Mat& image);
+
+    static void cannyImage(Mat& image);
+
+    static void adaptiveThresholdImage(Mat& image);
 };
 
 
