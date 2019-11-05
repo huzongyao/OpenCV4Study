@@ -18,6 +18,8 @@ public class OpenCVApi {
 
     public static native int adaptiveThreshold(Bitmap bitmap);
 
+    public static native int claheImage(Bitmap bitmap);
+
     static {
         System.loadLibrary("opencv");
     }

@@ -92,6 +92,9 @@ public class SimpleEffectActivity extends AppCompatActivity {
                 case 3:
                     OpenCVApi.cannyImage(bitmap);
                     break;
+                case 4:
+                    OpenCVApi.claheImage(bitmap);
+                    break;
             }
             runOnUiThread(() -> {
                 mImageAfter.setImageBitmap(bitmap);

@@ -52,6 +52,9 @@ JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap);
 JNIEXPORT jint JNICALL
 JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap);
 
+JNIEXPORT jint JNICALL
+JNI_FUNC(claheImage)(JNIEnv *env, jclass type, jobject bitmap);
+
 #ifdef __cplusplus
 }
 #endif

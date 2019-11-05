@@ -18,6 +18,8 @@ public:
     static void cannyImage(Mat& image);
 
     static void adaptiveThresholdImage(Mat& image);
+
+    static void claheImage(Mat& image);
 };
 
 
