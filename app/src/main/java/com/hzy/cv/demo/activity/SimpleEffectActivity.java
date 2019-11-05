@@ -1,5 +1,7 @@
 package com.hzy.cv.demo.activity;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,9 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.ImageUtils;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.hzy.cv.demo.R;
+import com.hzy.cv.demo.consts.RequestCode;
 import com.hzy.cv.demo.consts.RouterHub;
 import com.hzy.cv.demo.ndk.OpenCVApi;
+import com.hzy.cv.demo.utils.ActionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +30,7 @@ import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 @Route(path = RouterHub.SIMPLE_EFFECT_ACTIVITY)
 public class SimpleEffectActivity extends AppCompatActivity {
@@ -40,6 +46,8 @@ public class SimpleEffectActivity extends AppCompatActivity {
     private ExecutorService mExecutorService;
     private Bitmap mDemoBitmap;
     private int mEffectIndex = 0;
+    private Dialog mPreviewDialog;
+    private PhotoView mPhotoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +71,9 @@ public class SimpleEffectActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+        mPreviewDialog = new Dialog(this);
+        mPreviewDialog.setContentView(R.layout.dialog_preview_image);
+        mPhotoView = mPreviewDialog.findViewById(R.id.preview_view);
     }
 
     private void doImageProcessAsync() {
@@ -82,8 +93,10 @@ public class SimpleEffectActivity extends AppCompatActivity {
                     OpenCVApi.cannyImage(bitmap);
                     break;
             }
-
-            runOnUiThread(() -> mImageAfter.setImageBitmap(bitmap));
+            runOnUiThread(() -> {
+                mImageAfter.setImageBitmap(bitmap);
+                mPhotoView.setImageBitmap(bitmap);
+            });
         });
     }
 
@@ -103,6 +116,28 @@ public class SimpleEffectActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == RequestCode.CHOOSE_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    Bitmap bitmap = ActionUtils.getBmpFromIntent(data);
+                    if (bitmap != null) {
+                        mDemoBitmap.recycle();
+                        bitmap = ImageUtils.compressBySampleSize(bitmap,
+                                MAX_BITMAP_SIZE, MAX_BITMAP_SIZE, true);
+                        mDemoBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        bitmap.recycle();
+                        mImageBefore.setImageBitmap(mDemoBitmap);
+                        mImageAfter.setImageBitmap(mDemoBitmap);
+                        doImageProcessAsync();
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void loadBitmapFromImage() {
         try {
             InputStream is = getAssets().open("demo.jpg");
@@ -112,5 +147,17 @@ public class SimpleEffectActivity extends AppCompatActivity {
         }
         mImageBefore.setImageBitmap(mDemoBitmap);
         mImageAfter.setImageBitmap(mDemoBitmap);
+    }
+
+    @OnClick({R.id.image_before, R.id.image_after})
+    public void onImageViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.image_before:
+                ActionUtils.startImageContentAction(this, RequestCode.CHOOSE_IMAGE);
+                break;
+            case R.id.image_after:
+                mPreviewDialog.show();
+                break;
+        }
     }
 }

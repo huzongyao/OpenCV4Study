@@ -1,7 +1,6 @@
 package com.hzy.cv.demo.utils;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 
 public class ActionUtils {
 
@@ -23,6 +23,24 @@ public class ActionUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Bitmap getBmpFromIntent(Intent data) {
+        Uri uri = data.getData();
+        Bitmap bitmap = null;
+        try {
+            if (uri != null) {
+                bitmap = MediaStore.Images.Media.getBitmap(Utils.getApp().getContentResolver(), uri);
+            } else {
+                Bundle bundleExtras = data.getExtras();
+                if (bundleExtras != null) {
+                    bitmap = bundleExtras.getParcelable("data");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     public static void startImageContentAction(Activity activity, int requestCode) {
@@ -45,24 +63,5 @@ public class ActionUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static Bitmap getBitmapFromPickerIntent(Intent data, ContentResolver resolver) {
-        try {
-            Uri uri = data.getData();
-            Bitmap bitmap = null;
-            if (uri != null) {
-                bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-            } else {
-                Bundle bundleExtras = data.getExtras();
-                if (bundleExtras != null) {
-                    bitmap = bundleExtras.getParcelable("data");
-                }
-            }
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

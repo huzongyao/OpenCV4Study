@@ -12,12 +12,6 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_choose_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_a_image" />
-
         <ImageView
             android:id="@+id/opencv_image"
             android:layout_width="match_parent"

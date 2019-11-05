@@ -1,5 +1,6 @@
 package com.hzy.cv.demo.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,8 +16,10 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.ImageUtils;
 import com.hzy.cv.demo.R;
+import com.hzy.cv.demo.consts.RequestCode;
 import com.hzy.cv.demo.consts.RouterHub;
 import com.hzy.cv.demo.ndk.OpenCVApi;
+import com.hzy.cv.demo.utils.ActionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +28,7 @@ import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 @Route(path = RouterHub.BLUR_ACTIVITY)
 public class BlurImageActivity extends AppCompatActivity {
@@ -94,6 +98,28 @@ public class BlurImageActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == RequestCode.CHOOSE_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    Bitmap bitmap = ActionUtils.getBmpFromIntent(data);
+                    if (bitmap != null) {
+                        mDemoBitmap.recycle();
+                        bitmap = ImageUtils.compressBySampleSize(bitmap,
+                                MAX_BITMAP_SIZE, MAX_BITMAP_SIZE, true);
+                        mDemoBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        bitmap.recycle();
+                        mImageBefore.setImageBitmap(mDemoBitmap);
+                        mImageAfter.setImageBitmap(mDemoBitmap);
+                        doBlurProgress();
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void doBlurProgress() {
         mBlurInfoText.setText(getString(R.string.blur_level_int, mBlurLevel));
         mExecutorService.submit(() -> {
@@ -112,5 +138,10 @@ public class BlurImageActivity extends AppCompatActivity {
         }
         mImageBefore.setImageBitmap(mDemoBitmap);
         mImageAfter.setImageBitmap(mDemoBitmap);
+    }
+
+    @OnClick(R.id.image_before)
+    public void onImageBeforeClicked() {
+        ActionUtils.startImageContentAction(this, RequestCode.CHOOSE_IMAGE);
     }
 }

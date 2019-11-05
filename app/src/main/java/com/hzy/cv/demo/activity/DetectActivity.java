@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.hzy.cv.demo.R;
@@ -108,20 +109,7 @@ public class DetectActivity extends AppCompatActivity {
         if (requestCode == RequestCode.CHOOSE_IMAGE) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
-                    Uri uri = data.getData();
-                    Bitmap bitmap = null;
-                    try {
-                        if (uri != null) {
-                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        } else {
-                            Bundle bundleExtras = data.getExtras();
-                            if (bundleExtras != null) {
-                                bitmap = bundleExtras.getParcelable("data");
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Bitmap bitmap = ActionUtils.getBmpFromIntent(data);
                     if (bitmap != null) {
                         mDemoBitmap.recycle();
                         bitmap = ImageUtils.compressBySampleSize(bitmap,
@@ -137,7 +125,7 @@ public class DetectActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick(R.id.button_choose_image)
+    @OnClick(R.id.opencv_image)
     public void onChooseImageClicked() {
         ActionUtils.startImageContentAction(this, RequestCode.CHOOSE_IMAGE);
     }
