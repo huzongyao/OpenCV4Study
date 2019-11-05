@@ -20,6 +20,8 @@ import com.hzy.cv.demo.ndk.OpenCVApi;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,10 +41,13 @@ public class BlurImageActivity extends AppCompatActivity {
     @BindView(R.id.image_after)
     ImageView mImageAfter;
     int mBlurLevel;
+    private ExecutorService mExecutorService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mExecutorService = Executors.newSingleThreadExecutor();
         setContentView(R.layout.activity_blur_image);
         ButterKnife.bind(this);
         ActionBar actionBar = getSupportActionBar();
@@ -52,6 +57,12 @@ public class BlurImageActivity extends AppCompatActivity {
         loadBitmapFromImage();
         setSeekBarEvent();
         doBlurProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mExecutorService.shutdownNow();
+        super.onDestroy();
     }
 
     @Override
@@ -85,14 +96,11 @@ public class BlurImageActivity extends AppCompatActivity {
 
     private void doBlurProgress() {
         mBlurInfoText.setText(getString(R.string.blur_level_int, mBlurLevel));
-        new Thread() {
-            @Override
-            public void run() {
-                Bitmap bitmap = mDemoBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                OpenCVApi.blurBitmap(bitmap, mBlurLevel);
-                mImageAfter.post(() -> mImageAfter.setImageBitmap(bitmap));
-            }
-        }.start();
+        mExecutorService.submit(() -> {
+            Bitmap bitmap = mDemoBitmap.copy(Bitmap.Config.ARGB_8888, true);
+            OpenCVApi.blurBitmap(bitmap, mBlurLevel);
+            mImageAfter.post(() -> mImageAfter.setImageBitmap(bitmap));
+        });
     }
 
     private void loadBitmapFromImage() {

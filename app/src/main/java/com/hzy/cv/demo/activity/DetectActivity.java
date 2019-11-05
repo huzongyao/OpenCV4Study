@@ -26,6 +26,8 @@ import com.hzy.cv.demo.utils.FaceUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,10 +40,12 @@ public class DetectActivity extends AppCompatActivity {
     ImageView mOpenCvImage;
     public static final int MAX_BITMAP_SIZE = 2000;
     private Bitmap mDemoBitmap;
+    private ExecutorService mExecutorService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mExecutorService = Executors.newSingleThreadExecutor();
         setContentView(R.layout.activity_face_detect);
         ButterKnife.bind(this);
         ActionBar actionBar = getSupportActionBar();
@@ -52,6 +56,11 @@ public class DetectActivity extends AppCompatActivity {
         detectFromBitmap();
     }
 
+    @Override
+    protected void onDestroy() {
+        mExecutorService.shutdownNow();
+        super.onDestroy();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -65,20 +74,17 @@ public class DetectActivity extends AppCompatActivity {
 
     private void detectFromBitmap() {
         snakeBarShow("Detecting... Please Wait!!");
-        new Thread() {
-            @Override
-            public void run() {
-                String cascadePath = FaceUtils.ensureCascadeFile();
-                int[] pointList = OpenCVApi.detectFaceFromBitmap(cascadePath, mDemoBitmap);
-                Rect[] rectList = BitmapDrawUtils.getFromIntArray(pointList);
-                BitmapDrawUtils.drawRectOnBitmap(mDemoBitmap, rectList);
-                mOpenCvImage.post(() -> {
-                    mOpenCvImage.setImageBitmap(mDemoBitmap);
-                    String msg = getString(R.string.faces_detected, rectList.length);
-                    snakeBarShow(msg);
-                });
-            }
-        }.start();
+        mExecutorService.submit(() -> {
+            String cascadePath = FaceUtils.ensureCascadeFile();
+            int[] pointList = OpenCVApi.detectFaceFromBitmap(cascadePath, mDemoBitmap);
+            Rect[] rectList = BitmapDrawUtils.getFromIntArray(pointList);
+            BitmapDrawUtils.drawRectOnBitmap(mDemoBitmap, rectList);
+            mOpenCvImage.post(() -> {
+                mOpenCvImage.setImageBitmap(mDemoBitmap);
+                String msg = getString(R.string.faces_detected, rectList.length);
+                snakeBarShow(msg);
+            });
+        });
     }
 
     private void snakeBarShow(String msg) {
