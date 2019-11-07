@@ -6,5 +6,6 @@
         <item>Gray Map</item>
         <item>Canny Image</item>
         <item>Clahe Image</item>
+        <item>Bilateral Filter</item>
     </string-array>
 </resources>

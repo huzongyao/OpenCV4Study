@@ -46,3 +46,10 @@ void EffectUtils::claheImage(Mat &image) {
     clahe->apply(gray, gray);
     cvtColor(gray, image, COLOR_GRAY2RGBA);
 }
+
+void EffectUtils::bilateralImage(Mat &image) {
+    Mat gray, output;
+    cvtColor(image, gray, COLOR_RGBA2RGB);
+    bilateralFilter(gray, output, 7, 50, 50);
+    cvtColor(output, image, COLOR_RGB2RGBA);
+}

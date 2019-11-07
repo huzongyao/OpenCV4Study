@@ -95,6 +95,9 @@ public class SimpleEffectActivity extends AppCompatActivity {
                 case 4:
                     OpenCVApi.claheImage(bitmap);
                     break;
+                case 5:
+                    OpenCVApi.bilateralFilter(bitmap);
+                    break;
             }
             runOnUiThread(() -> {
                 mImageAfter.setImageBitmap(bitmap);

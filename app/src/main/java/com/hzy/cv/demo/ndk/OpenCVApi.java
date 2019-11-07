@@ -20,6 +20,8 @@ public class OpenCVApi {
 
     public static native int claheImage(Bitmap bitmap);
 
+    public static native int bilateralFilter(Bitmap bitmap);
+
     static {
         System.loadLibrary("opencv");
     }

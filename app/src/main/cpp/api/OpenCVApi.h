@@ -55,6 +55,9 @@ JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap);
 JNIEXPORT jint JNICALL
 JNI_FUNC(claheImage)(JNIEnv *env, jclass type, jobject bitmap);
 
+JNIEXPORT jint JNICALL
+JNI_FUNC(bilateralFilter)(JNIEnv *env, jclass type, jobject bitmap);
+
 #ifdef __cplusplus
 }
 #endif

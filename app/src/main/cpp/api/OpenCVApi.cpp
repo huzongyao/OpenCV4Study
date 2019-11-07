@@ -100,7 +100,7 @@ JNI_FUNC(negativeColor)(JNIEnv *env, jclass type, jobject bitmap) {
 }
 
 JNIEXPORT jint JNICALL
-JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap){
+JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap) {
     AndroidBitmapInfo info;
     Mat image;
     OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
@@ -111,7 +111,7 @@ JNI_FUNC(rgba2Gray)(JNIEnv *env, jclass type, jobject bitmap){
 }
 
 JNIEXPORT jint JNICALL
-JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap){
+JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap) {
     AndroidBitmapInfo info;
     Mat image;
     OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
@@ -122,7 +122,7 @@ JNI_FUNC(cannyImage)(JNIEnv *env, jclass type, jobject bitmap){
 }
 
 JNIEXPORT jint JNICALL
-JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap){
+JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap) {
     AndroidBitmapInfo info;
     Mat image;
     OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
@@ -133,12 +133,23 @@ JNI_FUNC(adaptiveThreshold)(JNIEnv *env, jclass type, jobject bitmap){
 }
 
 JNIEXPORT jint JNICALL
-JNI_FUNC(claheImage)(JNIEnv *env, jclass type, jobject bitmap){
+JNI_FUNC(claheImage)(JNIEnv *env, jclass type, jobject bitmap) {
     AndroidBitmapInfo info;
     Mat image;
     OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
     LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
     EffectUtils::claheImage(image);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(bilateralFilter)(JNIEnv *env, jclass type, jobject bitmap) {
+    AndroidBitmapInfo info;
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::bilateralImage(image);
     AndroidBitmap_unlockPixels(env, bitmap);
     return 0;
 }

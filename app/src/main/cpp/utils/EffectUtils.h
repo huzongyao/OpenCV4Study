@@ -11,15 +11,17 @@ using namespace cv;
 
 class EffectUtils {
 public:
-    static void negativeColor(Mat& image);
+    static void negativeColor(Mat &image);
 
-    static void rgba2Gray(Mat& image);
+    static void rgba2Gray(Mat &image);
 
-    static void cannyImage(Mat& image);
+    static void cannyImage(Mat &image);
 
-    static void adaptiveThresholdImage(Mat& image);
+    static void adaptiveThresholdImage(Mat &image);
 
-    static void claheImage(Mat& image);
+    static void claheImage(Mat &image);
+
+    static void bilateralImage(Mat &image);
 };
 
 
