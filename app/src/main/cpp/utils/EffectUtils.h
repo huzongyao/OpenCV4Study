@@ -5,7 +5,7 @@
 #ifndef OPENCV4STUDY_EFFECTUTILS_H
 #define OPENCV4STUDY_EFFECTUTILS_H
 
-#include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 
 using namespace cv;
 
@@ -22,6 +22,8 @@ public:
     static void claheImage(Mat &image);
 
     static void bilateralImage(Mat &image);
+
+    static void blobDetect(Mat &image);
 };
 
 

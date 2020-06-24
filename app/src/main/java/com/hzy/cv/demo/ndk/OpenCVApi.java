@@ -22,6 +22,8 @@ public class OpenCVApi {
 
     public static native int bilateralFilter(Bitmap bitmap);
 
+    public static native int blobDetect(Bitmap bitmap);
+
     static {
         System.loadLibrary("opencv");
     }

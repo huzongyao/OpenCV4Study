@@ -7,5 +7,6 @@
         <item>Canny Image</item>
         <item>Clahe Image</item>
         <item>Bilateral Filter</item>
+        <item>Blob Detect</item>
     </string-array>
 </resources>

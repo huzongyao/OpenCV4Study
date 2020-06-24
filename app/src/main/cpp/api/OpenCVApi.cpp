@@ -153,3 +153,14 @@ JNI_FUNC(bilateralFilter)(JNIEnv *env, jclass type, jobject bitmap) {
     AndroidBitmap_unlockPixels(env, bitmap);
     return 0;
 }
+
+JNIEXPORT jint JNICALL
+JNI_FUNC(blobDetect)(JNIEnv *env, jclass type, jobject bitmap) {
+    AndroidBitmapInfo info;
+    Mat image;
+    OpenCVUtils::lockABitmap2Mat(env, bitmap, info, image);
+    LOGD("Load Bitmap [%d x %d] !!", info.width, info.height);
+    EffectUtils::blobDetect(image);
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return 0;
+}
