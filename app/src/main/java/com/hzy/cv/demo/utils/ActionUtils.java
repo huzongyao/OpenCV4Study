@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -46,10 +45,8 @@ public class ActionUtils {
     public static void startImageContentAction(Activity activity, int requestCode) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*")
                 .addCategory(Intent.CATEGORY_OPENABLE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String[] mimeTypes = {"image/jpeg", "image/png", "image/gif"};
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-        }
+        String[] mimeTypes = {"image/jpeg", "image/png", "image/gif"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         intent = Intent.createChooser(intent, null);
         ActivityUtils.startActivityForResult(activity, intent, requestCode);
     }
